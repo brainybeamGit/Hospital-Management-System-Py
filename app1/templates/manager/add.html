@@ -1,0 +1,84 @@
+{% extends "manager/navbar.html" %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Doctor</title>
+    <link rel="stylesheet" href={% static "CSS/manager/add.css" %}>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Add Doctor</h2>
+
+    <!-- ✅ Error Message -->
+    {% if error %}
+        <div class="error">{{ error }}</div>
+    {% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Doctor Name</label>
+            <input type="text" name="name" required>
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" required>
+        </div>
+
+        <div class="form-group">
+            <label>Password</label>
+            <input type="password" name="password" required>
+        </div>
+
+        <div class="form-group">
+            <label>Gender</label>
+            <select name="gender" required>
+                <option value="">Select Gender</option>
+                <option>Male</option>
+                <option>Female</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="text" name="phone" required>
+        </div>
+
+        <div class="form-group">
+            <label>Department</label>
+            <input type="text" name="department" required>
+        </div>
+
+        <div class="form-group">
+            <label>Qualification</label>
+            <input type="text" name="qualification" required>
+        </div>
+
+        <div class="form-group">
+            <label>Experience (years)</label>
+            <input type="number" name="experience" min="0" required>
+        </div>
+
+        <div class="form-group">
+            <label>Fees</label>
+            <input type="number" name="fees" min="0" required>
+        </div>
+
+        <div class="checkbox-group">
+            <label>Available</label>
+            <input type="checkbox" name="availability" checked>
+        </div>
+
+        <button type="submit">Save Doctor</button>
+    </form>
+</div>
+
+</body>
+</html>
+{% endblock content %}

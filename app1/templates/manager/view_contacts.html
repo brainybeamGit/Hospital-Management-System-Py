@@ -1,0 +1,43 @@
+{% extends "manager/navbar.html" %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>View Contact Messages</title>
+    <link rel="stylesheet" href="{% static 'CSS/manager/view_contacts.css' %}">
+    
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>Contact Messages</h1>
+
+    <table>
+        <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Subject</th>
+            <th>Message</th>
+            <th>Date</th>
+        </tr>
+
+        {% for i in data %}
+        <tr>
+            <td>{{ i.name }}</td>
+            <td>{{ i.email }}</td>
+            <td>{{ i.subject }}</td>
+            <td>{{ i.message }}</td>
+            <td>{{ i.created_at }}</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+</div>
+
+</body>
+</html>
+{% endblock content %}

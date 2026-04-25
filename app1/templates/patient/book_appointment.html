@@ -1,0 +1,81 @@
+{% extends "patient/nav.html" %}
+{% block content %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Appointment</title>
+    <link rel="stylesheet" href={% static "CSS/patient/book_appointment.css" %}>
+</head>
+
+
+{% if error %}
+    <script>
+      alert("{{error}}")
+    </script>
+    {% endif %}
+<body>
+
+<div class="container">
+
+    <h2>Book Appointment</h2>
+
+    <!-- Django Messages -->
+    {% if messages %}
+        {% for message in messages %}
+            <div class="msg {% if message.tags == 'success' %}success{% endif %}">
+                {{ message }}
+            </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Doctor Info -->
+    <div class="doctor-box">
+        <p><b>Doctor:</b> {{ doctor.name }}</p>
+        <p><b>Department:</b> {{ doctor.department }}</p>
+        <p><b>Experience:</b> {{ doctor.experience }} years</p>
+        <p><b>Consultation Fee:</b>{{ doctor.fees }}</p>
+    </div>
+
+    <!-- Appointment Form -->
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Patient Name</label>
+        <input type="text" value="{{ user.first_name }} {{ user.middle_name }} {{ user.last_name }}" readonly>
+
+        <label>Email</label>
+        <input type="email" value="{{ user.email }}" readonly>
+
+        <label>Select Date</label>
+        <input type="date" name="date" min="{{ today }}" max="{{ tomorrow }}" required>
+    </br></br>
+
+    <select name="time" required>
+        <option value="">Select Time</option>
+        <option value="09:00">09:00 AM</option>
+        <option value="10:00">10:00 AM</option>
+        <option value="11:00">11:00 AM</option>
+        <option value="11:00">11:00 AM</option>
+        <option value="12:00">12:00 PM</option>
+        <option value="13:00">13:00 PM</option>
+        <option value="14:00">14:00 PM</option>
+        <option value="15:00">15:00 PM</option>
+
+
+
+    </select>
+
+    <button type="submit">Book Appointment</button>
+
+    </form>
+
+</div>
+
+
+</body>
+</html>
+
+{% endblock %}

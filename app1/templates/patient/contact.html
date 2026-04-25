@@ -1,0 +1,58 @@
+{% extends "patient/nav.html" %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact Us</title>
+    <link rel="stylesheet" href="{% static 'CSS/patient/contact.css' %}">
+    
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+    <h1>Contact Our Hospital</h1>
+    <p class="subtitle">We care about your health. Reach us anytime.</p>
+
+    <div class="contact-box">
+
+        <!-- LEFT SIDE -->
+        <div class="left">
+            <h2>Hospital Info</h2>
+
+            <p>📍 Ahmedabad, Gujarat</p>
+            <p>📞 +91 9876543210</p>
+            <p>📧 support@clinicOncaresync.com</p>
+            <p>🕒 09:00 AM - 08:00 PM</p>
+
+        </div>
+
+        <!-- RIGHT SIDE -->
+        <div class="right">
+            <h2>Send Message</h2>
+
+            <form method="POST">
+                {% csrf_token %}
+
+                <input type="text" name="name" placeholder="Your Name" required>
+                <input type="email" name="email" placeholder="Your Email" required>
+                <input type="text" name="subject" placeholder="Subject" required>
+
+                <textarea name="message" placeholder="Your Message" required></textarea>
+
+                <button type="submit">Send Message</button>
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+{% endblock content %}

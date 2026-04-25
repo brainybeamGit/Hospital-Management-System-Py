@@ -1,0 +1,53 @@
+{% extends "Patient/nav.html" %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'CSS/patient/report.css' %}">
+
+<div class="report-container">
+
+    <h2>My Medical Reports</h2>
+
+    <table>
+        <tr>
+            <th>Title</th>
+            <th>Doctor</th>
+            <th>Description</th>
+            <th>Date</th>
+            <th>File</th>
+        </tr>
+
+        {% for r in reports %}
+        <tr>
+            <td>{{ r.report_title }}</td>
+
+            <td>
+                {% if r.doctor %}
+                    {{ r.doctor.name }}
+                {% else %}
+                    N/A
+                {% endif %}
+            </td>
+
+            <td>{{ r.description }}</td>
+
+            <td>{{ r.uploaded_at }}</td>
+
+            <td>
+                <a href="{{ r.report_file.url }}" target="_blank" class="btn">
+                    View
+                </a>
+            </td>
+        </tr>
+
+        {% empty %}
+        <tr>
+            <td colspan="5">No reports found</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+</div>
+
+{% endblock %}

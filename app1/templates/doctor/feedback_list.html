@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Patient Feedback</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #eef2f7;
+        }
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+        table {
+            width: 100%;
+            background: white;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background: #007bff;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Patient Feedback</h2>
+
+    <table>
+        <tr>
+            <th>Patient</th>
+            <th>Rating</th>
+            <th>Suggestion</th>
+            <th>Date</th>
+        </tr>
+
+        {% for f in feedbacks %}
+        <tr>
+            <td>{{ f.patient.first_name }}</td>
+            <td>{{ f.rating }} ⭐</td>
+            <td>{{ f.suggestion }}</td>
+            <td>{{ f.created_at }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No feedback available</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+</body>
+</html>

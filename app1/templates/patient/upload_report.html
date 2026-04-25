@@ -1,0 +1,36 @@
+{% extends "Patient/nav.html" %}
+{% load static %}
+{% block content %}
+
+<link rel="stylesheet" href="{% static 'CSS/patient/report.css' %}">
+
+<div class="report-container">
+
+    <h2>Upload Medical Report</h2>
+
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
+
+    {% if success %}
+    <p class="success">{{ success }}</p>
+    {% endif %}
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <label>Report Title</label>
+        <input type="text" name="report_title" required>
+
+        <label>Upload File</label>
+        <input type="file" name="report_file" required>
+
+        <label>Description</label>
+        <textarea name="description"></textarea>
+
+        <button type="submit">Upload Report</button>
+    </form>
+
+</div>
+
+{% endblock %}

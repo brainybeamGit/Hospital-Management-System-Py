@@ -1,0 +1,72 @@
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: #f4f6f9;
+}
+
+.container {
+    width: 90%;
+    margin: 30px auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 20px;
+}
+
+.card {
+    background: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 10px;
+    padding: 20px;
+    transition: 0.2s;
+}
+
+.card:hover {
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.name {
+    font-size: 18px;
+    font-weight: 600;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.info {
+    font-size: 14px;
+    margin-bottom: 6px;
+    color: #555;
+}
+
+.available {
+    color: green;
+    font-weight: 500;
+}
+
+.not-available {
+    color: red;
+    font-weight: 500;
+}
+
+/* 🔵 Blue Button */
+.btn {
+    margin-top: 12px;
+    display: block;
+    text-align: center;
+    padding: 10px;
+    background-color: #007bff;   /* Blue */
+    color: white;
+    text-decoration: none;
+    border-radius: 6px;
+    transition: 0.3s ease;
+}
+
+/* 🔵 Hover Effect */
+.btn:hover {
+    background-color: #0056b3;   /* Dark Blue */
+}
+
+/* ⚪ Disabled Button */
+.disabled-btn {
+    background-color: #b0b0b0;
+    cursor: not-allowed;
+}

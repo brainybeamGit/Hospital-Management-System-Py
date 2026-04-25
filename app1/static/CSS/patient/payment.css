@@ -1,0 +1,86 @@
+/* Page spacing (because navbar already exists) */
+.payment-box {
+    max-width: 420px;
+    margin: 40px auto;
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+    font-family: Arial, sans-serif;
+}
+
+/* Title */
+.payment-box h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #2d3748;
+}
+
+/* Details section */
+.details {
+    background: #f7f9fc;
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+
+.details p {
+    margin: 8px 0;
+    font-size: 14px;
+    color: #4a5568;
+}
+
+.details strong {
+    color: #2d3748;
+}
+
+/* Payment methods */
+.methods {
+    margin-bottom: 20px;
+}
+
+.methods label {
+    display: block;
+    padding: 10px;
+    border: 1px solid #e2e8f0;
+    border-radius: 6px;
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 14px;
+}
+
+.methods label:hover {
+    background: #edf2f7;
+    border-color: #667eea;
+}
+
+/* Radio spacing */
+.methods input[type="radio"] {
+    margin-right: 10px;
+}
+
+/* Button */
+button {
+    width: 100%;
+    padding: 12px;
+    background: linear-gradient(135deg, #667eea, #5a67d8);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: linear-gradient(135deg, #5a67d8, #434190);
+}
+
+/* Error message */
+.error {
+    color: #e53e3e;
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 14px;
+}

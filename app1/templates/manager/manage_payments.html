@@ -1,0 +1,163 @@
+{% extends 'manager/navbar.html' %}
+{% load static %}
+
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manage Payments</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI';
+            background: #f4f6f9;
+        }
+
+        .container {
+            width: 95%;
+            margin: 30px auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0px 5px 15px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: #2c3e50;
+            color: white;
+            padding: 12px;
+        }
+
+        td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background: #f1f1f1;
+        }
+
+        /* PAYMENT COLORS */
+        .paid { color: green; font-weight: bold; }
+        .pending { color: orange; font-weight: bold; }
+        .failed { color: red; font-weight: bold; }
+        .refunded { color: purple; font-weight: bold; }
+        .cancelled { color: gray; font-weight: bold; }
+
+        /* APPOINTMENT STATUS */
+        .app-cancelled {
+            color: gray;
+            font-weight: bold;
+        }
+
+        select, button {
+            padding: 6px;
+            border-radius: 5px;
+        }
+
+        button {
+            background: green;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: darkgreen;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Manage Payments</h2>
+
+    <table>
+        <tr>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Date</th>
+            <th>Amount</th>
+            <th>Appointment</th> <!-- ✅ NEW -->
+            <th>Payment</th>
+            <th>Update</th>
+        </tr>
+
+        {% for pay in payments %}
+        <tr>
+            <td>{{ pay.appointment.patient_name }}</td>
+            <td>{{ pay.appointment.doctor.name }}</td>
+            <td>{{ pay.appointment.date }}</td>
+            <td>₹ {{ pay.amount }}</td>
+
+            <!-- ✅ APPOINTMENT STATUS -->
+            <td>
+                {% if pay.appointment.status == "Cancelled" %}
+                    <span class="app-cancelled">Cancelled</span>
+                {% else %}
+                    {{ pay.appointment.status }}
+                {% endif %}
+            </td>
+
+            <!-- ✅ PAYMENT STATUS -->
+            <td>
+                {% if pay.status == "Success" %}
+                    <span class="paid">Paid</span>
+                {% elif pay.status == "Pending" %}
+                    <span class="pending">Pending</span>
+                {% elif pay.status == "Failed" %}
+                    <span class="failed">Failed</span>
+                {% elif pay.status == "Refunded" %}
+                    <span class="refunded">Refunded</span>
+                {% elif pay.status == "Cancelled" %}
+                    <span class="cancelled">Cancelled</span>
+                {% endif %}
+            </td>
+
+            <!-- ✅ UPDATE -->
+            <td>
+                {% if pay.appointment.status == "Cancelled" %}
+                    <span class="cancelled">No Action</span>
+                {% else %}
+                <form method="POST" action="{% url 'update_payment_status' pay.id %}">
+                    {% csrf_token %}
+
+                    <select name="status">
+                        <option value="Pending">Pending</option>
+                        <option value="Success">Paid</option>
+                        <option value="Failed">Failed</option>
+                        <option value="Refunded">Refunded</option>
+                    </select>
+
+                    <button type="submit">Update</button>
+                </form>
+                {% endif %}
+            </td>
+        </tr>
+
+        {% empty %}
+        <tr>
+            <td colspan="7">No Payments Found</td>
+        </tr>
+        {% endfor %}
+
+    </table>
+
+</div>
+
+</body>
+</html>
+
+{% endblock %}

@@ -1,0 +1,73 @@
+{% extends "patient/nav.html" %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctors</title>
+    <link rel="stylesheet" href="{% static 'CSS/patient/patientdoctor.css' %}">
+</head>
+<body>
+
+<h2 style="text-align:center; margin-top:20px;"> Doctors</h2>
+
+<!-- Django Messages -->
+{% if messages %}
+    {% for message in messages %}
+        <div style="color:red; text-align:center;">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
+
+<div class="container">
+
+    {% for d in doctors %}
+    <div class="card">
+
+        <div class="name">{{ d.name }}</div>
+
+        <div class="info"><b>Email:</b> {{ d.email }}</div>
+        <div class="info"><b>Gender:</b> {{ d.gender }}</div>
+        <div class="info"><b>Department:</b> {{ d.department }}</div>
+        <div class="info"><b>Qualification:</b> {{ d.qualification }}</div>
+        <div class="info"><b>Experience:</b> {{ d.experience }} years</div>
+        <div class="info"><b>Fees:</b> {{ d.fees }}</div>
+
+
+        <div class="info">
+            <b>Status:</b>
+            {% if d.availability %}
+                <span style="color:green;">Available</span>
+            {% else %}
+                <span style="color:red;">Not Available</span>
+            {% endif %}
+        </div>
+
+        <!-- ✅ Button Logic -->
+        {% if d.availability %}
+            <a href="{% url 'book_appointment' d.id %}" class="btn">
+                Book Appointment
+            </a>
+        {% else %}
+            <button class="btn disabled-btn" onclick="showMessage()">
+                Book Appointment
+            </button>
+        {% endif %}
+
+    </div>
+    {% endfor %}
+
+</div>
+
+<script>
+function showMessage(){
+    alert("Doctor not available today");
+}
+</script>
+
+</body>
+</html>
+
+{% endblock %}

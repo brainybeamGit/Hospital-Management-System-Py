@@ -1,0 +1,41 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="{% static "CSS/manager/navbar.css" %}">
+
+</head>
+<body>
+
+<div class="navbar">
+    
+    <!-- LOGO -->
+    <div class="logo">
+        Manager Panel
+    </div>
+
+    <!-- NAV LINKS -->
+    <div class="nav-links">
+        <a href="{% url 'manager_dashboard' %}">Dashboard</a>
+        <a href="{% url 'doctor_list' %}">Doctors</a>
+        <a href="{% url 'all_users' %}">Patients</a>
+        <a href="{% url "all_appointments" %}">Appointments</a>
+        <a href="{% url "view_contacts" %}">Contect</a>
+
+
+        <!-- USER NAME -->
+        <span class="user">
+            👤 {{ request.session.manager_name }}
+        </span>
+
+        <!-- LOGOUT -->
+        <a href="{% url 'manager_logout' %}" class="logout">Logout</a>
+    </div>
+
+</div>
+
+{% block content %}
+{% endblock content %}
+
+</body>
+</html>

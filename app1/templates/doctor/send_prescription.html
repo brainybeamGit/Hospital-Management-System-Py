@@ -1,0 +1,175 @@
+{% extends "doctor/navigation.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Send Prescription</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #e3f2fd, #f5f7fa);
+        }
+
+      
+
+        /* CONTAINER */
+        .container {
+            width: 80%;
+            margin: 40px auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        /* FORM */
+        .form-box {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 30px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        label {
+            font-weight: 600;
+            color: #444;
+        }
+
+        textarea, input[type="file"] {
+            width: 100%;
+            margin-top: 8px;
+            margin-bottom: 15px;
+            padding: 12px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            transition: 0.3s;
+        }
+
+        textarea:focus {
+            border-color: #007bff;
+            outline: none;
+        }
+
+        /* BUTTON */
+        button {
+            padding: 10px 25px;
+            background: linear-gradient(135deg, #007bff, #00c6ff);
+            color: white;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* CARD */
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card p {
+            margin: 6px 0;
+            color: #444;
+        }
+
+        .date {
+            font-size: 13px;
+            color: gray;
+        }
+
+        /* DOWNLOAD BUTTON */
+        .btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background: #28a745;
+            color: white;
+            text-decoration: none;
+            border-radius: 20px;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background: #218838;
+        }
+
+        .no-data {
+            text-align: center;
+            color: gray;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <h2>Send Prescription - {{ patient.first_name }}</h2>
+
+    <!-- FORM -->
+    <div class="form-box">
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            <label>Prescription</label>
+            <textarea name="prescription" rows="4" required></textarea>
+
+            <label>Upload Report (Optional)</label>
+            <input type="file" name="report_file">
+
+            <button type="submit">Send Prescription</button>
+        </form>
+    </div>
+
+    <!-- RECORDS -->
+    {% if records %}
+        {% for r in records %}
+        <div class="card">
+
+            <p class="date">{{ r.created_at }}</p>
+
+            <p><strong>Prescription:</strong><br>
+                {{ r.prescription }}
+            </p>
+
+            {% if r.report_file %}
+                <a href="{{ r.report_file.url }}" target="_blank" class="btn">
+                    Download Report
+                </a>
+            {% endif %}
+
+        </div>
+        {% endfor %}
+    {% else %}
+        <p class="no-data">No Records Found</p>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
+
+{% endblock content %}

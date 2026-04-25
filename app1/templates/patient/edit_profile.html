@@ -1,0 +1,97 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Edit Profile</title>
+<link rel="stylesheet" href="{% static 'CSS/patient/profile.css' %}">
+</head>
+
+<body>
+
+<div class="main">
+
+<h2>Edit Profile</h2>
+
+<form method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+
+<div class="profile-header">
+
+{% if user.photo %}
+<img src="{{ user.photo.url }}">
+{% else %}
+<img src="{% static 'images/default.png' %}">
+{% endif %}
+
+<input type="file" name="photo">
+
+</div>
+
+
+<div class="profile-info">
+
+<div class="info-box">
+<label>First Name</label>
+<input type="text" name="first_name" value="{{ user.first_name }}">
+</div>
+
+<div class="info-box">
+<label>Middle Name</label>
+<input type="text" name="middle_name" value="{{ user.middle_name }}">
+</div>
+
+<div class="info-box">
+<label>Last Name</label>
+<input type="text" name="last_name" value="{{ user.last_name }}">
+</div>
+
+<div class="info-box">
+<label>Mobile</label>
+<input type="text" name="mobile" value="{{ user.mobile }}">
+</div>
+
+<div class="info-box">
+<label>Gender</label>
+<select name="gender">
+<option value="Male" {% if user.gender == "Male" %}selected{% endif %}>Male</option>
+<option value="Female" {% if user.gender == "Female" %}selected{% endif %}>Female</option>
+<option value="Other" {% if user.gender == "Other" %}selected{% endif %}>Other</option>
+</select>
+</div>
+
+<div class="info-box">
+<label>Date of Birth</label>
+<input type="date" name="dob" value="{{ user.dob }}">
+</div>
+
+<div class="info-box">
+<label>Blood Group</label>
+<input type="text" name="bloodgroup" value="{{ user.bloodgroup }}">
+</div>
+
+<div class="info-box">
+<label>City</label>
+<input type="text" name="city" value="{{ user.city }}">
+</div>
+
+<div class="info-box">
+<label>Pincode</label>
+<input type="text" name="pincode" value="{{ user.pincode }}">
+</div>
+
+<div class="info-box">
+<label>Address</label>
+<textarea name="address">{{ user.address }}</textarea>
+</div>
+
+</div>
+
+<button type="submit" class="edit-btn">Update Profile</button>
+
+</form>
+
+</div>
+
+</body>
+</html>

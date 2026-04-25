@@ -1,0 +1,37 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Doctor Dashboard</title>
+<link rel="stylesheet" href={% static "CSS/doctor/navigation.css" %}>
+</head>
+<body>
+
+<!-- Header -->
+<header class="header">
+
+    <div class="logo">🏥 ClinicOn CareSync
+
+ | Doctor</div>
+
+    <nav class="navbar">
+        <a href="{% url "doctor_dashboard" %}">Dashboard</a>
+        <a href="{% url 'doctor_appointments' %}">Appointments</a>
+        <a href="{% url "doctor_patients_perticular" %}">Patients</a>
+        <a href="{% url "doctor_profile" %}">Profile</a>
+
+    </nav>
+
+   <div class="header-right">
+    <span class="doctor-name">
+     {{ request.session.doctor_name }}
+    </span>
+    <a href="{% url 'doctor_logout' %}">Logout</a>
+</div>
+</header>
+{% block content %}
+{% endblock content %}
+
+</body>
+</html>

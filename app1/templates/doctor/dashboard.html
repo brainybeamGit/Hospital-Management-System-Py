@@ -1,0 +1,86 @@
+{% extends "doctor/navigation.html" %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctor Dashboard</title>
+    <link rel="stylesheet" href="{% static 'css/doctor/dashboard.css' %}">
+</head>
+<body>
+
+<div class="dashboard-container">
+
+    <!-- Welcome Section -->
+    <div class="welcome-card">
+        <h2>Welcome {{ request.session.doctor_name }}</h2>
+        <p>Email: {{ request.session.doctor_email }}</p>
+        <p>Have a great day! Here’s your activity summary.</p>
+    </div>
+
+    <!-- Stats Cards -->
+    <div class="card-grid">
+
+        <div class="card blue" onclick="location.href='{% url "doctor_appointments" %}'">
+            <h3>Total Appointments</h3>
+            <p class="number"></p>
+            <span>All scheduled appointments</span>
+        </div>
+
+        <div class="card green" onclick="location.href='{% url "today_appointments" %}'">
+            <h3>Today's Patients</h3>
+    
+            <span>Patients visiting today</span>
+        </div>
+
+       
+       <div class="card purple">
+    <h3>Available Status</h3>
+
+    {% if doctor.availability %}
+        <p class="status available">Available</p>
+        <span>Ready for consultation</span>
+    {% else %}
+        <p class="status not-available">Not Available</p>
+        <span>Currently unavailable</span>
+    {% endif %}
+
+</div>
+         <div class="card orange" onclick="location.href='{% url "doctor_profile" %}'">
+            <h3>My Profile</h3>
+            <p class="number"></p>
+            <span>click Me!</span>
+        </div>
+
+
+    </div>
+
+    <!-- Extra Section -->
+    <div class="extra-section">
+
+        <div class="recent-activity">
+            <h3>Recent Activity</h3>
+            <ul>
+                <li>✔ Appointment booked By Patient</li>
+                <li>✔ Payment Check for Patient </li>
+                <li>✔ Appointment completed</li>
+                <li>✔ New patient registered</li>
+            </ul>
+        </div>
+
+        <div class="quick-actions">
+            <h3>Quick Actions</h3>
+            <button  onclick="location.href='{% url "doctor_appointments" %}'">View Appointments</button>
+           
+            <button  onclick="location.href='{% url "doctor_profile" %}'">Profile</button>
+        </div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+
+{% endblock content %}

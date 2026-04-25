@@ -1,0 +1,106 @@
+{% extends "doctor/navigation.html" %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Today's Appointments</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f7fc;
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+            margin-top: 40px;
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        table th, table td {
+            padding: 12px;
+            text-align: center;
+        }
+
+        table th {
+            background: #007bff;
+            color: white;
+        }
+
+        table tr:nth-child(even) {
+            background: #f2f2f2;
+        }
+
+        .status {
+            padding: 5px 10px;
+            border-radius: 5px;
+            color: white;
+        }
+
+        .Pending { background: orange; }
+        .Approved { background: blue; }
+        .Rejected { background: red; }
+        .Completed { background: green; }
+
+        .no-data {
+            text-align: center;
+            padding: 20px;
+            color: gray;
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Today's Appointments ({{ today }})</h2>
+
+    <table>
+        <tr>
+            <th>Patient</th>
+            <th>Doctor</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Fee</th>
+            <th>Payment</th>
+            <th>Status</th>
+        </tr>
+
+        {% if appointments %}
+            {% for app in appointments %}
+            <tr>
+                <td>{{ app.patient_name }}</td>
+                <td>{{ app.doctor.name }}</td>
+                <td>{{ app.date }}</td>
+                <td>{{ app.time }}</td>
+                <td>₹{{ app.consultation_fee }}</td>
+                <td>{{ app.payment_status }}</td>
+                <td>
+                    <span class="status {{ app.status }}">
+                        {{ app.status }}
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="7" class="no-data">No appointments today</td>
+            </tr>
+        {% endif %}
+    </table>
+</div>
+
+</body>
+</html>
+{% endblock content %}

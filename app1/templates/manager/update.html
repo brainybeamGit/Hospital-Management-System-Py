@@ -1,0 +1,83 @@
+{% include 'manager/navbar.html' %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Update Doctor</title>
+    <link rel="stylesheet" href={% static "CSS/manager/update_doctor.css" %}>
+</head>
+<body>
+
+<div class="form-container">
+    <h2>Update Doctor</h2>
+
+    {% if error %}<p class="error">{{ error }}</p>{% endif %}
+    {% if success %}<p class="success">{{ success }}</p>{% endif %}
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="name" value="{{ doc.name }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" name="email" value="{{ doc.email }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Password (leave blank to keep old)</label>
+            <input type="password" name="password">
+        </div>
+
+        <div class="form-group">
+            <label>Gender</label>
+            <select name="gender">
+                <option {% if doc.gender == "Male" %}selected{% endif %}>Male</option>
+                <option {% if doc.gender == "Female" %}selected{% endif %}>Female</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Phone</label>
+            <input type="text" name="phone" value="{{ doc.phone }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Department</label>
+            <input type="text" name="department" value="{{ doc.department }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Qualification</label>
+            <input type="text" name="qualification" value="{{ doc.qualification }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>Experience</label>
+            <input type="number" name="experience" value="{{ doc.experience }}" min="0" required>
+        </div>
+
+         <div class="form-group">
+            <label>Fees</label>
+            <input type="number" name="fees" value="{{ doc.fees }}" required>
+        </div>
+
+        <div class="form-group">
+            <label>
+                Available
+                <input type="checkbox" name="availability" {% if doc.availability %}checked{% endif %}>
+            </label>
+        </div>
+
+        <button type="submit">Update Doctor</button>
+    </form>
+</div>
+
+</body>
+</html>
+{% endblock content %}

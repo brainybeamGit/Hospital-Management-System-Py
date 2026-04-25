@@ -1,0 +1,162 @@
+{% extends "patient/nav.html" %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Appointments</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f5f7fa;
+        }
+
+        .container {
+            width: 90%;
+            margin: 30px auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: #4CAF50;
+            color: white;
+            padding: 12px;
+        }
+
+        td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        tr:hover {
+            background: #f1f1f1;
+        }
+
+        .btn {
+            padding: 6px 12px;
+            background: #2196F3;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            background: #0b7dda;
+        }
+
+        .no-data {
+            text-align: center;
+            padding: 20px;
+            color: red;
+        }
+
+        .pending { color: orange; font-weight: bold; }
+        .approved { color: blue; font-weight: bold; }
+        .rejected { color: red; font-weight: bold; }
+        .completed { color: green; font-weight: bold; }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>My Appointments</h2>
+
+    <table>
+        <tr>
+            <th>Doctor</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Fee</th>
+            <th>Payment</th>
+            <th>Doctor Status</th> <!-- ✅ NEW COLUMN -->
+            <th>Prescription</th> <!-- ✅ NEW COLUMN -->
+            <th>Action</th>
+
+        </tr>
+
+        {% for app in appointments %}
+        <tr>
+            <td>{{ app.doctor.name }}</td>
+            <td>{{ app.date }}</td>
+            <td>{{ app.time }}</td>
+            <td>₹{{ app.consultation_fee }}</td>
+
+            <!-- Payment Status -->
+            <td>
+                {% if app.payment_status == "Pending" %}
+                    <span class="pending">Pending</span>
+                {% else %}
+                    <span class="completed">Paid</span>
+                {% endif %}
+            </td>
+
+            <!-- ✅ Doctor Status -->
+            <td>
+                {% if app.status == "Pending" %}
+                    <span class="pending">Pending</span>
+                {% elif app.status == "Approved" %}
+                    <span class="approved">Approved</span>
+                {% elif app.status == "Rejected" %}
+                    <span class="rejected">Rejected</span>
+                {% else %}
+                    <span class="completed">Completed</span>
+                {% endif %}
+            </td>
+           <td>
+            <a href="{% url 'patient_prescriptions_by_id' app.patient.id app.doctor.id %}" class="btn">
+            View Prescription and Report
+            </a>
+            </td>
+
+            <!-- Action -->
+            {% comment %} <td>
+                <a href="{% url 'appointment_detail' app.id %}" class="btn">View</a>
+            </td> {% endcomment %}
+
+            <td>
+    <a href="{% url 'appointment_detail' app.id %}" class="btn">View</a>
+
+    {% if app.status == "Pending" %}
+        <a href="{% url 'cancel_appointment' app.id %}" 
+           class="btn" 
+           style="background:red;"
+           onclick="return confirm('Are you sure you want to cancel?');">
+           Cancel
+        </a>
+    {% elif app.status == "Cancelled" %}
+        <span class="rejected">Cancelled</span>
+    {% endif %}
+</td>
+
+            
+            
+            
+        </tr>
+
+        {% empty %}
+        <tr>
+            <td colspan="7" class="no-data">No appointments found</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+</body>
+</html>
+
+{% endblock %}

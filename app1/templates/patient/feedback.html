@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Give Feedback</title>
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f7fb;
+        }
+        .box {
+            width: 400px;
+            margin: 50px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+        }
+        h2 {
+            text-align: center;
+        }
+        select, textarea, button {
+            width: 100%;
+            margin-top: 10px;
+            padding: 10px;
+        }
+        button {
+            background: #007bff;
+            color: white;
+            border: none;
+        }
+    </style>
+</head>
+<body>
+
+<div class="box">
+    <h2>Feedback for Dr. {{ doctor.name }}</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <label>Rating:</label>
+        <select name="rating" required>
+            <option value="">Select Rating</option>
+            <option value="1">1 ⭐</option>
+            <option value="2">2 ⭐</option>
+            <option value="3">3 ⭐</option>
+            <option value="4">4 ⭐</option>
+            <option value="5">5 ⭐</option>
+        </select>
+
+        <label>Suggestion:</label>
+        <textarea name="suggestion" placeholder="Write your feedback..."></textarea>
+
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+</body>
+</html>

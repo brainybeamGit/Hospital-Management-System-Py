@@ -1,0 +1,114 @@
+{% include 'manager/navbar.html' %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Patients</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f9;
+        }
+
+        .container {
+            width: 95%;
+            margin: 30px auto;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 0 10px #ccc;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background: #2c3e50;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f1f1f1;
+        }
+
+        img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+
+        .btn {
+            padding: 5px 10px;
+            border: none;
+            color: white;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .edit {
+            background: #3498db;
+        }
+
+        .delete {
+            background: #e74c3c;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>All Patients</h2>
+
+    <table>
+        <tr>
+            <th>Photo</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Gender</th>
+            <th>City</th>
+            <th>Action</th>
+        </tr>
+
+        {% for u in users %}
+        <tr>
+            <td>
+                {% if u.photo %}
+                    <img src="{{ u.photo.url }}">
+                {% else %}
+                    No Image
+                {% endif %}
+            </td>
+
+            <td>{{ u.first_name }} {{ u.last_name }}</td>
+            <td>{{ u.email }}</td>
+            <td>{{ u.mobile }}</td>
+            <td>{{ u.gender }}</td>
+            <td>{{ u.city }}</td>
+
+            <td>
+            
+                <a href="{% url 'delete_user' u.id %}">
+                <button class="btn delete">Delete</button>
+</a>
+            </td>
+        </tr>
+        {% endfor %}
+
+    </table>
+</div>
+
+</body>
+</html>

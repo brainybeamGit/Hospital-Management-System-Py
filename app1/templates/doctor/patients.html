@@ -1,0 +1,136 @@
+{% extends "doctor/navigation.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Patients</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            background: #f4f7fc;
+            margin: 0;
+        }
+
+        .navbar {
+            {% comment %} background: #007bff; {% endcomment %}
+            padding: 15px;
+            text-align: right;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            margin-right: 20px;
+            font-weight: 500;
+        }
+
+        .container {
+            width: 90%;
+            margin: 40px auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th {
+            background: #007bff;
+            color: white;
+            padding: 12px;
+        }
+
+        td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f1f1f1;
+        }
+
+        .status {
+            padding: 5px 10px;
+            border-radius: 20px;
+            color: white;
+            font-size: 13px;
+        }
+
+        .Pending { background: orange; }
+        .Approved { background: blue; }
+        .Rejected { background: red; }
+        .Completed { background: green; }
+
+        .no-data {
+            text-align: center;
+            padding: 20px;
+            color: gray;
+        }
+    </style>
+</head>
+
+<body>
+<div class="container">
+
+    <h2>My Patients</h2>
+
+    <table>
+        <tr>
+            <th>Patient Name</th>
+            <th>Email</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Report</th>
+            <th>Fee</th>
+            <th>prescription</th>
+            <th>Payment</th>
+            <th>Status</th>
+        </tr>
+
+        {% if patients %}
+            {% for p in patients %}
+            <tr>
+                <td>{{ p.patient_name }}</td>
+                <td>{{ p.patient_email }}</td>
+                <td>{{ p.date }}</td>
+                <td>{{ p.time }}</td>
+                <td>
+                <a href="{% url 'view_patient_reports' p.patient.id %}" class="btn">
+    View Reports
+</a></td>
+                <td>₹{{ p.consultation_fee }}</td>
+                <td><a href="{% url 'send_prescription' p.patient.id %}" class="btn">
+    Send Prescription
+</a></td>
+                <td>{{ p.payment_status }}</td>
+                <td>
+                    <span class="status {{ p.status }}">
+                        {{ p.status }}
+                    </span>
+                </td>
+            </tr>
+            {% endfor %}
+        {% else %}
+            <tr>
+                <td colspan="7" class="no-data">No Patients Found</td>
+            </tr>
+        {% endif %}
+    </table>
+
+</div>
+
+</body>
+</html>
+
+{% endblock content %}

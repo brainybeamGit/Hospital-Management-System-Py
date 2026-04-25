@@ -1,0 +1,101 @@
+{% extends "manager/navbar.html" %}
+{% block content %}
+{% load static %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manager Dashboard</title>
+
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Segoe UI';
+            background: #f4f6f9;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            padding: 25px;
+            border-radius: 12px;
+            color: white;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            transition: 0.3s;
+            cursor: pointer;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card h3 {
+            font-size: 22px;
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            font-size: 18px;
+        }
+
+        /* COLORS */
+        .blue { background: #3498db; }
+        .green { background: #2ecc71; }
+        .orange { background: #f39c12; }
+        .red { background: #e74c3c; }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>Welcome,{{ user.username }}</h2>
+
+    <div class="cards">
+
+        <!-- ALL APPOINTMENTS -->
+        <div class="card blue" onclick="location.href='{% url "manager_payments" %}'">
+            <h3>Manage Payments</h3>
+            <p>{{ appointments }}</p>
+        </div>
+
+        <!-- ADD DOCTOR -->
+        <div class="card green" onclick="location.href='{% url 'add_doctor' %}'">
+            <h3>Add Doctor</h3>
+            <p>{{ doctors }}</p>
+        </div>
+
+        <!-- UPDATE DOCTOR -->
+        <div class="card orange" onclick="location.href='{% url "doctor_list" %}'">
+            <h3>Doctor List</h3>
+           
+        </div>
+
+        <!-- TOTAL REVENUE -->
+        <div class="card red">
+    <h3>Total Revenue</h3>
+    <p>₹ {{ revenue }}</p>
+</div>
+
+    </div>
+
+</div>
+
+</body>
+</html>
+{% endblock content %}
+

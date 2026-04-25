@@ -1,0 +1,133 @@
+{% extends "doctor/navigation.html" %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Doctor Appointments</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f5f7fa;
+        }
+
+        .container {
+            width: 90%;
+            margin: 30px auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background: #007bff;
+            color: white;
+        }
+
+        button {
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+            margin: 2px;
+        }
+
+        .approve {
+            background: green;
+            color: white;
+        }
+
+        .reject {
+            background: red;
+            color: white;
+        }
+
+        .complete {
+            background: blue;
+            color: white;
+        }
+
+        .status {
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>My Appointments</h2>
+
+    <table>
+        <tr>
+            <th>Patient Name</th>
+            <th>Email</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Fee</th>
+            <th>Payment</th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+
+        {% for app in appointments %}
+        <tr>
+            <td>{{ app.patient_name }}</td>
+            <td>{{ app.patient_email }}</td>
+            <td>{{ app.date }}</td>
+            <td>{{ app.time }}</td>
+            <td>₹{{ app.consultation_fee }}</td>
+            <td>{{ app.payment_status }}</td>
+
+            <!-- STATUS -->
+            <td class="status">{{ app.status }}</td>
+
+            
+
+            <!-- ACTION BUTTONS -->
+            <td>
+                {% if app.status == "Pending" %}
+                    <a href="{% url 'update_appointment_status' app.id 'Approved' %}">
+                        <button class="approve">Approve</button>
+                    </a>
+
+                    <a href="{% url 'update_appointment_status' app.id 'Rejected' %}">
+                        <button class="reject">Reject</button>
+                    </a>
+                {% elif app.status == "Approved" %}
+                    <a href="{% url 'update_appointment_status' app.id 'Completed' %}">
+                        <button class="complete">Complete</button>
+                    </a>
+                {% else %}
+                    {{ app.status }}
+                {% endif %}
+            </td>
+        </tr>
+
+        {% empty %}
+        <tr>
+            <td colspan="8">No appointments found</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+</div>
+
+</body>
+</html>
+
+{% endblock %}

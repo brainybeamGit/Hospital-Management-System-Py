@@ -1,0 +1,41 @@
+{% extends "patient/nav.html" %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Payment</title>
+    <link rel="stylesheet" href="{% static 'css/patient/payment.css' %}">
+</head>
+<body>
+
+<div class="payment-box">
+    <h2>Payment Page</h2>
+
+    {% if error %}
+    <p class="error">{{ error }}</p>
+    {% endif %}
+
+    <div class="details">
+        <p><strong>Doctor:</strong> {{ appointment.doctor.name }}</p>
+        <p><strong>Date:</strong> {{ appointment.date }}</p>
+        <p><strong>Time:</strong> {{ appointment.time }}</p>
+        <p><strong>Amount:</strong> ₹{{ appointment.consultation_fee }}</p>
+    </div>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="methods">
+            <label><input type="radio" name="payment_method" value="Card"> Online</label>
+            <label><input type="radio" name="payment_method" value="Cash"> Cash</label>
+        </div>
+
+        <button type="submit">Pay Now</button>
+    </form>
+</div>
+
+</body>
+</html>
+
+{% endblock content %}

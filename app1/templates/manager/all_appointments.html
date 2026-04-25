@@ -1,0 +1,130 @@
+{% include 'manager/navbar.html' %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>All Appointments</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+        }
+
+        .container {
+            width: 95%;
+            margin: 30px auto;
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+        }
+
+        th {
+            background: #2c3e50;
+            color: #fff;
+            padding: 14px;
+        }
+
+        td {
+            padding: 12px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+
+        tr:hover {
+            background: #f9f9f9;
+        }
+
+        /* PAYMENT */
+        .paid { color: #27ae60; font-weight: bold; }
+        .pending { color: #e74c3c; font-weight: bold; }
+
+        /* STATUS COLORS */
+        .status-pending { color: orange; font-weight: bold; }
+        .status-approved { color: blue; font-weight: bold; }
+        .status-rejected { color: red; font-weight: bold; }
+        .status-completed { color: green; font-weight: bold; }
+        .status-cancelled { color: gray; font-weight: bold; }
+
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>All Appointments</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Patient</th>
+                <th>Doctor</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Fee</th>
+                <th>Payment</th>
+                <th>Status</th> <!-- ✅ ADDED -->
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for a in appointments %}
+            <tr>
+                <td>{{ a.patient_name }}</td>
+                <td>{{ a.doctor.name }}</td>
+                <td>{{ a.date }}</td>
+                <td>{{ a.time }}</td>
+                <td>₹ {{ a.consultation_fee }}</td>
+
+                <!-- PAYMENT -->
+                <td>
+                    <span class="{% if a.payment_status == 'Paid' %}paid{% else %}pending{% endif %}">
+                        {{ a.payment_status }}
+                    </span>
+                </td>
+
+                <!-- ✅ STATUS COLUMN -->
+                <td>
+                    {% if a.status == "Pending" %}
+                        <span class="status-pending">Pending</span>
+
+                    {% elif a.status == "Approved" %}
+                        <span class="status-approved">Approved</span>
+
+                    {% elif a.status == "Rejected" %}
+                        <span class="status-rejected">Rejected</span>
+
+                    {% elif a.status == "Completed" %}
+                        <span class="status-completed">Completed</span>
+
+                    {% elif a.status == "Cancelled" %}
+                        <span class="status-cancelled">Cancelled</span>
+
+                    {% endif %}
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,92 @@
+{% extends "Patient/nav.html" %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My Prescriptions</title>
+
+    <style>
+        body {
+            font-family: 'Segoe UI';
+            background: #f4f7fc;
+        }
+
+        .container {
+            width: 80%;
+            margin: 30px auto;
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .card {
+            background: white;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .date {
+            font-size: 13px;
+            color: gray;
+        }
+
+        .btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 8px 15px;
+            background: green;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .btn:hover {
+            background: darkgreen;
+        }
+
+        .no-data {
+            text-align: center;
+            color: gray;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+
+    <h2>My Prescriptions</h2>
+
+    {% if records %}
+        {% for r in records %}
+        <div class="card">
+
+            <p class="date">{{ r.created_at }}</p>
+
+            <p><strong>Doctor:</strong> {{ r.doctor.name }}</p>
+
+            <p><strong>Prescription:</strong><br>
+                {{ r.prescription }}
+            </p>
+
+            {% if r.report_file %}
+                <a href="{{ r.report_file.url }}" target="_blank" class="btn">
+                    Download Report
+                </a>
+            {% endif %}
+
+        </div>
+        {% endfor %}
+    {% else %}
+        <p class="no-data">No Prescriptions Found</p>
+    {% endif %}
+
+</div>
+
+</body>
+</html>
+{% endblock content %}

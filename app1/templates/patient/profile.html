@@ -1,0 +1,113 @@
+{% extends "Patient/nav.html" %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Patient Profile</title>
+<link rel="stylesheet" href={% static "CSS/patient/profile.css" %}>
+</head>
+
+<body>
+
+<!-- Main -->
+
+<div class="main">
+
+<div class="profile-header">
+
+{% if user.photo %}
+<img src="{{ user.photo.url }}">
+{% else %}
+<img src="{% static 'images/default.png' %}">
+{% endif %}
+
+<div>
+<h2>{{ user.first_name }} {{ user.middle_name }}</h2>
+<p>{{ user.email }}</p>
+</div>
+
+</div>
+
+
+<div class="profile-info">
+
+<div class="info-box">
+<div class="label">First Name</div>
+<div class="value">{{ user.first_name }}</div>
+</div>
+
+<div class="info-box">
+<div class="label">Middle Name</div>
+<div class="value">{{ user.middle_name }}</div>
+</div>
+
+<div class="info-box">
+<div class="label">Last Name</div>
+<div class="value">{{ user.last_name }}</div>
+</div>
+
+<div class="info-box">
+<div class="label">Mobile</div>
+<div class="value">{{ user.mobile }}</div>
+</div>
+
+<div class="info-box">
+<div class="label">Gender</div>
+<div class="value">{{ user.gender }}</div>
+</div>
+
+<div class="info-box">
+<div class="label">Date of Birth</div>
+<div class="value">{{ user.dob }}</div>
+</div>
+
+<div class="info-box">
+<div class="label">Age</div>
+<div class="value">{{ user.age }}</div>
+</div>
+
+<div class="info-box">
+<div class="label">Blood Group</div>
+<div class="value">{{ user.bloodgroup }}</div>
+</div>
+
+<div class="info-box">
+<div class="label">City</div>
+<div class="value">{{ user.city }}</div>
+</div>
+
+<div class="info-box">
+<div class="label">Pincode</div>
+<div class="value">{{ user.pincode }}</div>
+</div>
+
+<div class="info-box">
+<div class="label">Address</div>
+<div class="value">{{ user.address }}</div>
+</div>
+
+</div>
+<a href={% url 'edit_profile' %}>
+<button class="edit-btn">Edit Profile</button>
+</a>
+
+
+<a href={% url 'upload_report' %}>
+<button class="edit-btn">Upload Reports</button>
+</a>
+
+
+<a href={% url 'home' %}>
+<button class="edit-btn">Home</button>
+</a>
+
+
+</div>
+
+</div>
+
+</body>
+</html>
+{% endblock content %}

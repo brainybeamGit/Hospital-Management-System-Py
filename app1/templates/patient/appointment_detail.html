@@ -1,0 +1,98 @@
+{% extends "patient/nav.html" %}
+{% load static %}
+{% block content %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Appointment Details</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f5f7fa;
+        }
+
+        .container {
+            width: 50%;
+            margin: 40px auto;
+            background: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .info {
+            margin: 10px 0;
+            font-size: 18px;
+        }
+
+        .label {
+            font-weight: bold;
+        }
+
+        .btn-back {
+            display: block;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .btn-back a {
+            padding: 10px 20px;
+            background: #4CAF50;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+
+        .btn-back a:hover {
+            background: #45a049;
+        }
+
+        .status-paid {
+            color: green;
+            font-weight: bold;
+        }
+
+        .status-pending {
+            color: orange;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Appointment Details</h2>
+
+    <div class="info"><span class="label">Doctor:</span> {{ app.doctor.name }}</div>
+    <div class="info"><span class="label">Patient:</span> {{ app.patient_name }}</div>
+    <div class="info"><span class="label">Email:</span> {{ app.patient_email }}</div>
+    <div class="info"><span class="label">Date:</span> {{ app.date }}</div>
+    <div class="info"><span class="label">Time:</span> {{ app.time }}</div>
+    <div class="info"><span class="label">Consultation Fee:</span> ₹{{ app.consultation_fee }}</div>
+
+    <div class="info">
+        <span class="label">Payment Status:</span>
+        {% if app.payment_status == "Pending" %}
+            <span class="status-pending">Pending</span>
+        {% else %}
+            <span class="status-paid">Paid</span>
+        {% endif %}
+    </div>
+
+    <div class="btn-back">
+        <a href="{% url 'my_appointments' %}">Back</a>
+    </div>
+</div>
+
+</body>
+</html>
+
+{% endblock %}

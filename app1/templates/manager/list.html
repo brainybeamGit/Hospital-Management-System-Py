@@ -1,0 +1,61 @@
+{% extends "manager/navbar.html" %}
+{% block content %}
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Doctor List</title>
+    <link rel="stylesheet" href={% static "CSS/manager/list.css" %}>
+</head>
+<body>
+
+<div class="container">
+    <h2>Doctor List</h2>
+
+    <a href="{% url 'add_doctor' %}" class="add-btn">+ Add Doctor</a>
+
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Gender</th>
+            <th>Phone</th>
+            <th>Department</th>
+            <th>Qualification</th>
+            <th>Experience</th>
+            <th>Available</th>
+            <th>Actions</th>
+        </tr>
+
+        {% for d in doctors %}
+        <tr>
+            <td>{{ d.id }}</td>
+            <td>{{ d.name }}</td>
+            <td>{{ d.email }}</td>
+            <td>{{ d.gender }}</td>
+            <td>{{ d.phone }}</td>
+            <td>{{ d.department }}</td>
+            <td>{{ d.qualification }}</td>
+            <td>{{ d.experience }}</td>
+            <td>
+                {% if d.availability %}
+                    Yes
+                {% else %}
+                    No
+                {% endif %}
+            </td>
+            <td>
+                <a href="{% url 'update_doctor' d.id %}" class="btn edit">Update</a>
+                <a href="{% url 'delete_doctor' d.id %}" class="btn delete"
+                   onclick="return confirm('Are you sure?')">Delete</a>
+            </td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+</body>
+</html>
+{% endblock content%}

@@ -1,0 +1,32 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Manager Login</title>
+    <link rel="stylesheet" href="{% static "CSS/manager/login.css" %}">
+
+</head>
+<body>
+
+<div class="box">
+    <h2>Manager Login</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="input-group">
+            <input type="email" name="email" placeholder="Enter Email" required>
+        </div>
+
+        <div class="input-group">
+            <input type="password" name="password" placeholder="Enter Password" required>
+        </div>
+
+        <button type="submit">Login</button>
+    </form>
+
+    
+</div>
+
+</body>
+</html>
